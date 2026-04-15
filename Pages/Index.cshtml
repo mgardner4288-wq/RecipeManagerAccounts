@@ -1,0 +1,47 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Marketplace";
+}
+
+<h1>Marketplace</h1>
+
+@if (!Model.IsLoggedIn)
+{
+    <h2>Login</h2>
+
+    <form method="post" asp-page-handler="Login">
+        <label for="email">Email:</label><br />
+        <input id="email" name="Email" type="email" required /><br /><br />
+
+        <label for="password">Password:</label><br />
+        <input id="password" name="Password" type="password" required /><br /><br />
+
+        <button type="submit">Log In</button>
+    </form>
+}
+else
+{
+    <p>Welcome, @Model.UserEmail!</p>
+
+    <form method="post" asp-page-handler="Logout">
+        <button type="submit">Log Out</button>
+    </form>
+
+    <h2>Create Product</h2>
+
+    <form method="post" asp-page-handler="CreateProduct">
+        <label for="productName">Product Name:</label><br />
+        <input id="productName" name="ProductName" type="text" required /><br /><br />
+
+        <label for="price">Price:</label><br />
+        <input id="price" name="Price" type="number" step="0.01" required /><br /><br />
+
+        <button type="submit">Create Product</button>
+    </form>
+
+    @if (!string.IsNullOrEmpty(Model.Message))
+    {
+        <p>@Model.Message</p>
+    }
+}
